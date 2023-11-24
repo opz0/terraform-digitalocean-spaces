@@ -3,7 +3,7 @@ provider "digitalocean" {
 
 module "spaces" {
   source        = "./../../"
-  name          = "spaces"
+  name          = "digitalocean-spaces"
   environment   = "test"
   acl           = "private"
   force_destroy = false

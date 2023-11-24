@@ -17,12 +17,12 @@ This Terraform configuration is designed to create and manage a DigitalOcean spa
 To use this module, you should have Terraform installed and configured for DIGITALOCEAN. This module provides the necessary Terraform configuration for creating DIGITALOCEAN resources, and you can customize the inputs as needed. Below is an example of how to use this module:
 
 
-- # complete example
+## Example: complete
 You can use this module in your Terraform configuration like this:
 ```hcl
 
 module "spaces" {
-  source        = "git::https://github.com/opz0/terraform-digitalocean-spaces.git?ref=v1.0.0"
+  source        = "git::https://github.com/cypik/terraform-digitalocean-spaces.git?ref=v1.0.0"
   name          = "spaced"
   environment   = "test"
   acl           = "private"
@@ -83,7 +83,7 @@ Please replace "your_database_spaces_id" with the actual ID of your DigitalOcean
 You can use this module in your Terraform configuration like this:
 ```hcl
 module "spaces" {
-  source        = "git::https://github.com/opz0/terraform-digitalocean-spaces.git?ref=v1.0.0"
+  source        = "git::https://github.com/cypik/terraform-digitalocean-spaces.git?ref=v1.0.0"
   name          = "spaces"
   environment   = "test"
   acl           = "private"
@@ -113,10 +113,10 @@ This module does not produce any outputs. It is primarily used for labeling reso
 - 'bucket_domain_name' : The FQDN of the bucket (e.g. bucket-name.nyc3.digitaloceanspaces.com).
 
 ## Examples
-For detailed examples on how to use this module, please refer to the 'examples' directory within this repository.
+For detailed examples on how to use this module, please refer to the '[examples](https://github.com/cypik/terraform-digitalocean-spaces/blob/master/_examples)' directory within this repository.
 
 ## License
-This Terraform module is provided under the '[License Name]' License. Please see the [LICENSE](https://github.com/opz0/terraform-digitalocean-spaces/blob/master/LICENSE) file for more details.
+This Terraform module is provided under the '[License Name]' License. Please see the [LICENSE](https://github.com/cypik/terraform-digitalocean-spaces/blob/master/LICENSE) file for more details.
 
 ## Author
 Your Name
