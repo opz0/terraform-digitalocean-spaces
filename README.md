@@ -81,7 +81,7 @@ module "spaces" {
 Please replace "your_database_spaces_id" with the actual ID of your DigitalOcean database spaces, and adjust the spaces rules as needed.
 
 
-# Example: Default 
+# Example: Default
 You can use this module in your Terraform configuration like this:
 ```hcl
 module "spaces" {
@@ -94,6 +94,7 @@ module "spaces" {
   region        = "nyc3"
 }
 ```
+
 This example demonstrates how to create various DIGITALOCEAN resources using the provided modules. Adjust the input values to suit your specific requirements.
 
 
@@ -125,7 +126,7 @@ This Terraform module is provided under the **MIT** License. Please see the [LIC
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_labels"></a> [labels](#module\_labels) | git::https://github.com/cypik/terraform-digitalocean-labels.git | v1.0.0 |
+| <a name="module_labels"></a> [labels](#module\_labels) | cypik/labels/digitalocean | 1.0.1 |
 
 ## Resources
 
