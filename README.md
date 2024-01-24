@@ -1,14 +1,15 @@
-# terraform-digitalocean-spaces
-# DigitalOcean Terraform Configuration
+# Terraform-digitalocean-spaces
+# Terraform digitalocean Cloud spaces Module.
 
 ## Table of Contents
 
 - [Introduction](#introduction)
 - [Usage](#usage)
-- [Module Inputs](#module-inputs)
-- [Module Outputs](#module-outputs)
 - [Examples](#examples)
+- [Author](#author)
 - [License](#license)
+- [Inputs](#inputs)
+- [Outputs](#outputs)
 
 ## Introduction
 This Terraform configuration is designed to create and manage a DigitalOcean spaces.
@@ -17,12 +18,13 @@ This Terraform configuration is designed to create and manage a DigitalOcean spa
 To use this module, you should have Terraform installed and configured for DIGITALOCEAN. This module provides the necessary Terraform configuration for creating DIGITALOCEAN resources, and you can customize the inputs as needed. Below is an example of how to use this module:
 
 
-## Example: complete
+# Example: Complete
 You can use this module in your Terraform configuration like this:
 ```hcl
 
 module "spaces" {
-  source        = "git::https://github.com/cypik/terraform-digitalocean-spaces.git?ref=v1.0.0"
+  source        = "cypik/spaces/digitalocean"
+  version       = "1.0.1"
   name          = "spaced"
   environment   = "test"
   acl           = "private"
@@ -79,11 +81,12 @@ module "spaces" {
 Please replace "your_database_spaces_id" with the actual ID of your DigitalOcean database spaces, and adjust the spaces rules as needed.
 
 
-- # default example
+# Example: Default 
 You can use this module in your Terraform configuration like this:
 ```hcl
 module "spaces" {
-  source        = "git::https://github.com/cypik/terraform-digitalocean-spaces.git?ref=v1.0.0"
+  source        = "cypik/spaces/digitalocean"
+  version       = "1.0.1"
   name          = "spaces"
   environment   = "test"
   acl           = "private"
@@ -94,30 +97,66 @@ module "spaces" {
 This example demonstrates how to create various DIGITALOCEAN resources using the provided modules. Adjust the input values to suit your specific requirements.
 
 
-## Module Inputs
-
-- 'source': The source of the spaces module.
-- 'name' (string): A name for the spaces.
-- 'environment' (string): The environment in which the spaces rules will be applied.
-- 'region':The region where the bucket resides .
-- 'acl': Canned ACL applied on bucket creation.
-- 'force_destroy' : Unless true, the bucket will only be destroyed if empty (Defaults to false).
-- 'lifecycle_rule' :  A configuration of object lifecycle management (documented below).
-
-## Module Outputs
-
-This module does not produce any outputs. It is primarily used for labeling resources within your Terraform configuration.
-
-- 'urn':  The uniform resource name for the bucket.
-- 'name' : The name of the bucket.
-- 'bucket_domain_name' : The FQDN of the bucket (e.g. bucket-name.nyc3.digitaloceanspaces.com).
-
 ## Examples
-For detailed examples on how to use this module, please refer to the '[examples](https://github.com/cypik/terraform-digitalocean-spaces/blob/master/_examples)' directory within this repository.
-
-## License
-This Terraform module is provided under the '[License Name]' License. Please see the [LICENSE](https://github.com/cypik/terraform-digitalocean-spaces/blob/master/LICENSE) file for more details.
+For detailed examples on how to use this module, please refer to the [examples](https://github.com/cypik/terraform-digitalocean-spaces/blob/master/example) directory within this repository.
 
 ## Author
 Your Name
-Replace '[License Name]' and '[Your Name]' with the appropriate license and your information. Feel free to expand this README with additional details or usage instructions as needed for your specific use case.
+Replace **MIT** and **cypik** with the appropriate license and your information. Feel free to expand this README with additional details or usage instructions as needed for your specific use case.
+
+## License
+This Terraform module is provided under the **MIT** License. Please see the [LICENSE](https://github.com/cypik/terraform-digitalocean-spaces/blob/master/LICENSE) file for more details.
+
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.6 |
+| <a name="requirement_digitalocean"></a> [digitalocean](#requirement\_digitalocean) | >= 2.34.1 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | >= 2.34.1 |
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_labels"></a> [labels](#module\_labels) | git::https://github.com/cypik/terraform-digitalocean-labels.git | v1.0.0 |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [digitalocean_spaces_bucket.spaces2](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/spaces_bucket) | resource |
+| [digitalocean_spaces_bucket_policy.foobar](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/spaces_bucket_policy) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_acl"></a> [acl](#input\_acl) | Canned ACL applied on bucket creation (private or public-read). | `string` | `null` | no |
+| <a name="input_cors_rule"></a> [cors\_rule](#input\_cors\_rule) | CORS Configuration specification for this bucket | <pre>list(object({<br>    allowed_headers = list(string)<br>    allowed_methods = list(string)<br>    allowed_origins = list(string)<br>    expose_headers  = list(string)<br>    max_age_seconds = number<br>  }))</pre> | `null` | no |
+| <a name="input_enabled"></a> [enabled](#input\_enabled) | Whether to create the resources. Set to `false` to prevent the module from creating any resources. | `bool` | `true` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
+| <a name="input_expiration"></a> [expiration](#input\_expiration) | Specifies a time period after which applicable objects expire (documented below). | `list(any)` | `[]` | no |
+| <a name="input_force_destroy"></a> [force\_destroy](#input\_force\_destroy) | Unless true, the bucket will only be destroyed if empty (Defaults to false). | `bool` | `false` | no |
+| <a name="input_label_order"></a> [label\_order](#input\_label\_order) | Label order, e.g. `cypik`,`application`. | `list(any)` | <pre>[<br>  "name",<br>  "environment"<br>]</pre> | no |
+| <a name="input_lifecycle_rule"></a> [lifecycle\_rule](#input\_lifecycle\_rule) | A configuration of object lifecycle management (documented below). | `list(any)` | `[]` | no |
+| <a name="input_managedby"></a> [managedby](#input\_managedby) | ManagedBy, eg 'cypik' | `string` | `"cypik"` | no |
+| <a name="input_name"></a> [name](#input\_name) | Name  (e.g. `app` or `cluster`). | `string` | `""` | no |
+| <a name="input_policy"></a> [policy](#input\_policy) | The text of the policy. | `any` | `null` | no |
+| <a name="input_region"></a> [region](#input\_region) | The region to create spaces. | `string` | `""` | no |
+| <a name="input_versioning"></a> [versioning](#input\_versioning) | (Optional) A state of versioning (documented below). | `bool` | `true` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_bucket_domain_name"></a> [bucket\_domain\_name](#output\_bucket\_domain\_name) | The date and time of when the VPC was created. |
+| <a name="output_name"></a> [name](#output\_name) | The date and time of when the VPC was created. |
+| <a name="output_urn"></a> [urn](#output\_urn) | The uniform resource name (URN) for the VPC. |
+<!-- END_TF_DOCS -->
