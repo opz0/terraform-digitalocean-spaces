@@ -1,12 +1,13 @@
 module "labels" {
-  source      = "git::https://github.com/opz0/terraform-digitalocean-labels.git?ref=v1.0.0"
+  source      = "cypik/labels/digitalocean"
+  version     = "1.0.1"
   name        = var.name
   environment = var.environment
   managedby   = var.managedby
   label_order = var.label_order #
 }
 
-resource "digitalocean_spaces_bucket" "spaces" {
+resource "digitalocean_spaces_bucket" "spaces2" {
   count         = var.enabled ? 1 : 0
   name          = module.labels.id
   region        = var.region
@@ -50,7 +51,7 @@ resource "digitalocean_spaces_bucket" "spaces" {
 
 resource "digitalocean_spaces_bucket_policy" "foobar" {
   count  = var.enabled && var.policy != null ? 1 : 0
-  region = join("", digitalocean_spaces_bucket.spaces[*].region)
-  bucket = join("", digitalocean_spaces_bucket.spaces[*].name)
+  region = join("", digitalocean_spaces_bucket.spaces2[*].region)
+  bucket = join("", digitalocean_spaces_bucket.spaces2[*].name)
   policy = var.policy
 }
