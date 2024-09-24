@@ -24,7 +24,7 @@ You can use this module in your Terraform configuration like this:
 
 module "spaces" {
   source        = "cypik/spaces/digitalocean"
-  version       = "1.0.1"
+  version       = "1.0.2"
   name          = "spaced"
   environment   = "test"
   acl           = "private"
@@ -86,7 +86,7 @@ You can use this module in your Terraform configuration like this:
 ```hcl
 module "spaces" {
   source        = "cypik/spaces/digitalocean"
-  version       = "1.0.1"
+  version       = "1.0.2"
   name          = "spaces"
   environment   = "test"
   acl           = "private"
