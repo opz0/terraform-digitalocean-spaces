@@ -8,5 +8,4 @@ module "spaces" {
   acl           = "private"
   force_destroy = false
   region        = "nyc3"
-
 }
