@@ -1,6 +1,6 @@
 module "labels" {
   source      = "cypik/labels/digitalocean"
-  version     = "1.0.1"
+  version     = "1.0.2"
   name        = var.name
   environment = var.environment
   managedby   = var.managedby
@@ -13,16 +13,6 @@ resource "digitalocean_spaces_bucket" "spaces2" {
   region        = var.region
   acl           = var.acl
   force_destroy = var.force_destroy
-
-  dynamic "cors_rule" {
-    for_each = var.cors_rule == null ? [] : var.cors_rule
-    content {
-      allowed_headers = cors_rule.value.allowed_headers
-      allowed_methods = cors_rule.value.allowed_methods
-      allowed_origins = cors_rule.value.allowed_origins
-      max_age_seconds = cors_rule.value.max_age_seconds
-    }
-  }
 
   dynamic "lifecycle_rule" {
     for_each = var.lifecycle_rule
@@ -44,10 +34,42 @@ resource "digitalocean_spaces_bucket" "spaces2" {
       }
     }
   }
+
   versioning {
     enabled = var.versioning
   }
 }
+
+resource "digitalocean_spaces_bucket_cors_configuration" "cors_config" {
+  bucket = digitalocean_spaces_bucket.spaces2[0].name
+  region = var.region
+
+  dynamic "cors_rule" {
+    for_each = var.cors_rule == null ? [] : var.cors_rule
+    content {
+      allowed_headers = cors_rule.value.allowed_headers
+      allowed_methods = cors_rule.value.allowed_methods
+      allowed_origins = cors_rule.value.allowed_origins
+      max_age_seconds = cors_rule.value.max_age_seconds
+    }
+  }
+
+  # Specific CORS rules
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET"]
+    allowed_origins = ["*"]
+    max_age_seconds = 3000
+  }
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["PUT", "POST", "DELETE"]
+    allowed_origins = ["https://www.example.com"]
+    max_age_seconds = 3000
+  }
+}
+
 
 resource "digitalocean_spaces_bucket_policy" "foobar" {
   count  = var.enabled && var.policy != null ? 1 : 0
